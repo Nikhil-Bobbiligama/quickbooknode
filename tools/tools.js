@@ -38,10 +38,15 @@ var Tools = function () {
       }
 
       // Update endpoints
+      // console.log("helll")
+      // console.log(response.body)
       var json = JSON.parse(response.body)
       tools.openid_configuration = json
       tools.openid_uri = json.userinfo_endpoint
       tools.revoke_uri = json.revocation_endpoint
+      
+      // console.log(json.authorization_endpoint+"json.authorization_endpoint")
+      // console.log(json.token_endpoint+"json.token_endpoint")
 
       // Re-create OAuth2 Client
       authConfig.authorizationUri = json.authorization_endpoint
@@ -54,6 +59,8 @@ var Tools = function () {
   // response is received, refresh tokens should be used to get a new access token,
   // and the API call should be tried again.
   this.checkForUnauthorized = function(req, requestObj, err, response) {
+    console.log("response at tools==")
+    console.log(response)
     return new Promise(function (resolve, reject) {
       if(response.statusCode == 401) {
         console.log('Received a 401 response!  Trying to refresh tokens.')
@@ -74,6 +81,7 @@ var Tools = function () {
         })
       } else {
         // No 401, continue!
+        console.log("error ")
         resolve({err, response})
       }
     })

@@ -5,10 +5,11 @@ var express = require('express')
 var router = express.Router()
 
 router.get('/', function (req, res) {
+  console.log("call for connected")
   var token = tools.getToken(req.session)
   if(!token) return res.redirect('/')
 
-  // Don't call OpenID if we didn't request OpenID scopes
+  // Don't call OpenID if we didn't request OpenID scopes res.send('you are connected with quick books') 
   if(!tools.containsOpenId()) return res.render('connected')
 
   // Call OpenID endpoint
@@ -23,10 +24,10 @@ router.get('/', function (req, res) {
       console.log('OpenID response: ' + rawData)
       try {
         var parsedData = JSON.parse(rawData)
-        res.render('connected', parsedData)
+        // res.render('connected', parsedData)
       } catch (e) {
         console.log(e.message)
-        res.render('connected')
+        // res.render('connected')
       }
     });
   });

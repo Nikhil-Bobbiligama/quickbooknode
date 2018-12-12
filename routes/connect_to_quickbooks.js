@@ -6,6 +6,7 @@ var router = express.Router()
 router.get('/', function (req, res) {
   // Set the Accounting + Payment scopes
   tools.setScopes('connect_to_quickbooks')
+  
 
   // Constructs the authorization URI.
   var uri = tools.intuitAuth.code.getUri({
